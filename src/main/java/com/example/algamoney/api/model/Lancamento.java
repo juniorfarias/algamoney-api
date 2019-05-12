@@ -1,5 +1,6 @@
 package com.example.algamoney.api.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -29,6 +30,21 @@ public class Lancamento {
 	@Column(name = "data_pagamento")
 	private LocalDate dataPagamento;
 	
+	private BigDecimal valor;
+	
+	private String observacao;
+	
+	@Enumerated(EnumType.STRING)
+	private TipoLancamento tipo;
+	
+	@ManyToOne
+	@JoinColumn(name = "codigo_categoria")
+	private Categoria categoria;
+	
+	@ManyToOne
+	@JoinColumn(name = "codigo_pessoa")
+	private Pessoa pessoa;
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -54,19 +70,7 @@ public class Lancamento {
 		return true;
 	}
 
-	private String observacao;
 	
-	@Enumerated(EnumType.STRING)
-	private TipoLancamento tipo;
-	
-	@ManyToOne
-	@JoinColumn(name = "codigo_categoria")
-	private Categoria categoria;
-	
-	@ManyToOne
-	@JoinColumn(name = "codigo_pessoa")
-	private Pessoa pessoa;
-
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -129,5 +133,13 @@ public class Lancamento {
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+
+	public BigDecimal getValor() {
+		return valor;
+	}
+
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
 	}
 }
